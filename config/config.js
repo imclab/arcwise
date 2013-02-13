@@ -19,4 +19,4 @@ mongoose.connection.on('error', function(evt) {
 });
 
 // Export everything!
-_.extend(exports, configs, { connection: mongoose.connection });
+_.extend(exports, configs);
