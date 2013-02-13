@@ -6,7 +6,9 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , config = require('./config')
+  , mongoose = require('mongoose');
 
 var app = express();
 
@@ -24,6 +26,12 @@ app.configure(function(){
 
 app.configure('development', function(){
   app.use(express.errorHandler());
+});
+
+// Create a default mongoose connection
+mongoose.connect(config.mongo_uri);
+mongoose.connection.on('error', function(evt) {
+    console.log('app.js', 'DB Connection error', evt);
 });
 
 app.get('/', routes.index);
