@@ -9,6 +9,7 @@
     "express": "3.0.0rc2",
     "jade": "*",
     "mongoose": "~3.5.5",
-    "redis": "~0.8.2"
+    "redis": "~0.8.2",
+    "underscore": "~1.4.4"
   }
 }

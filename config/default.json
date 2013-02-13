@@ -1,0 +1,4 @@
+{
+    "mongo_uri": "mongodb://localhost/arcwise",
+    "title": "Hello, Arcwise!"
+}
