@@ -10,3 +10,4 @@ Dependencies
 * __NodeJS__: http://nodejs.org/api/index.html
 * __MongoDB__: http://docs.mongodb.org/manual/
 * __Redis__: http://redis.io/documentation
+* __Jake__: https://github.com/mde/jake
