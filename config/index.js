@@ -1,3 +1,7 @@
+/*
+ * You can create a custom.json and specify
+ * values for the keys you wish to override.
+ */
 var _ = require('underscore')
   , mongoose = require('mongoose')
   , configs = require('./default.json')

@@ -1,5 +1,3 @@
-// Default config values. Create custom.json and specify
-// values for the keys you wish to override.
 {
     "mongo_uri":    "mongodb://localhost/arcwise",
     "title":        "Hello, Arcwise!"

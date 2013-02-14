@@ -10,6 +10,9 @@
     "jade": "*",
     "mongoose": "~3.5.5",
     "redis": "~0.8.2",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "passport-local-mongoose": "~0.2.1",
+    "passport": "~0.1.15",
+    "passport-local": "~0.1.6"
   }
 }

@@ -8,7 +8,10 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , config = require('./config')
-  , mongoose = require('mongoose');
+  , user = require('./models/user')
+  , mongoose = require('mongoose')
+  , passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
@@ -20,8 +23,12 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
+  app.use(express.cookieParser('something simple this way walks'));
+  app.use(express.session());
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -34,8 +41,20 @@ mongoose.connection.on('error', function(evt) {
     console.log('app.js', 'DB Connection error', evt);
 });
 
-app.get('/', routes.index);
+// Configure passport to manage user account actions
+passport.use(new LocalStrategy(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
 
+// Define routes
+app.get('/', routes.index);
+app.post('/signup', routes.signup);
+app.post('/login', passport.authenticate('local', { successRedirect: '/yay', failureRedirect: '/boo' }));
+app.get('/logout', routes.logout);
+app.get('/yay', routes.loginSuccess);
+app.get('/boo', routes.loginFail);
+
+// Start the app
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
