@@ -1,25 +1,30 @@
 extends layout
 
 block content
-  h1= title
-  h3= subt
+    h1= title
+    h3= subt
 
-  if (user)
-    p Welcome #{user.username}
-      a(href="/logout") &nbsp;log out
+    if (user)
+        p Welcome #{user.username}&nbsp;
+            a(href="/logout") log out
+        form(method="post", action="/articles")
+            input(type="text", name="title", value="The article used for testing")
+            textarea(name="body")
+            hr
+            button(type="submit") Publish!
 
-  else
-    p Sign up!
-      form(method="post", action="/signup")
-        input(type="text", name="username", placeholder="username")
-        input(type="password", name="password", placeholder="password")
-        button(type="submit") Sign up
-  
-    hr
+
+    else
+        p Sign up!
+        form(method="post", action="/signup")
+            input(type="text", name="username", placeholder="username")
+            input(type="password", name="password", placeholder="password")
+            button.btn(type="submit") Sign up
+        hr
     
-    p Log in!
-      form(method="post", action="/login")
-        input(type="text", name="username", placeholder="username")
-        input(type="password", name="password", placeholder="password")
-        button(type="submit") Log in
+        p Log in!
+        form(method="post", action="/login")
+            input(type="text", name="username", placeholder="username")
+            input(type="password", name="password", placeholder="password")
+            button.btn(type="submit") Log in
       
