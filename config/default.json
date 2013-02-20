@@ -1,5 +1,8 @@
 {
+    "title":            "Hello, Arcwise!",
     "mongo_uri":        "mongodb://localhost/arcwise",
     "mongo_test_uri":   "mongodb://localhost/arcwisetestdb",
-    "title":            "Hello, Arcwise!"
+    "pwd_saltlen":      32,
+    "pwd_keylen":       32,
+    "pwd_iterations":   1000
 }
