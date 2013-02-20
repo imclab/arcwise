@@ -48,11 +48,10 @@ passport.deserializeUser(user.deserializeUser());
 
 // Define routes
 app.get('/', routes.index);
+// app.get('/:username', routes.index);
 app.post('/signup', routes.signup);
-app.post('/login', passport.authenticate('local', { successRedirect: '/yay', failureRedirect: '/boo' }));
+app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/' }));
 app.get('/logout', routes.logout);
-app.get('/yay', routes.loginSuccess);
-app.get('/boo', routes.loginFail);
 
 // Start the app
 http.createServer(app).listen(app.get('port'), function(){

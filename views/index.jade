@@ -2,16 +2,55 @@ extends layout
 
 block content
     h1= title
-    h3= subt
 
     if (user)
         p Welcome #{user.username}&nbsp;
             a(href="/logout") log out
-        form(method="post", action="/articles")
-            input(type="text", name="title", value="The article used for testing")
-            textarea(name="body")
-            hr
-            button(type="submit") Publish!
+
+        form.hero-unit.form-horizontal(method="post", action="/articles")
+
+            h1 Form-fill tool
+            p Create some random posts to serve as content while we bootstrap this app. Attribute posts to any valid user, and give them some unique content!
+
+            div.control-group
+                label.control-label Author:
+                div.controls
+                    select(name="author")
+                        each author, i in users
+                            if (i == post.author)
+                                option(value='#{author._id}', selected="selected") (#{i}) #{author.username}
+                            else
+                                option(value='#{author._id}') (#{i}) #{author.username}
+
+            div.control-group
+                label.control-label Title:
+                div.controls
+                    input.input-xxlarge(type="text", name="title", value="#{post.title}")
+            
+            div.control-group
+                label.control-label Body:
+                div.controls
+                    textarea.input-block-level(name="body", rows="20") #{post.body}
+            
+            div.control-group.offset2
+                label.checkbox
+                    if (post.published)
+                        input(type="checkbox", name="published", value="true", checked="checked")
+                    else
+                        input(type="checkbox", name="published", value="true")
+                    | Published?
+
+            div.control-group.offset2
+
+                a.btn(href="/")
+                    i.icon-repeat
+                    | &nbsp;Refresh!
+
+                | &nbsp;
+
+                button.btn.btn-primary(type="submit")
+                    i.icon-share.icon-white
+                    | &nbsp;Publish!
 
 
     else

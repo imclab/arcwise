@@ -1,25 +1,37 @@
 var configs = require('../config')
+  , dimsum = require('dimsum')
   , user = require('../models/user');
 
 exports.index = function(req, res){
-  res.render('index', { title: configs.title, subt: 'This is the index page', user: req.user });
+
+    user.find({}, function(err, users) {
+
+        res.render('index', {
+            title: 'Arcwise',
+            user: req.user,
+            users: users,
+            post: {
+                author: Math.random() * users.length << 0,
+                title: dimsum.generate(1, { 
+                    'words_per_sentence': [2, 5],
+                    'commas_per_sentence': [0, 0],
+                    'sentences_per_paragraph': [1, 1]
+                }).replace('.', ''),
+                body: dimsum(5),
+                published: (1 == Math.random() * 2 << 0)
+            }
+        });
+
+    });
 };
 
 exports.signup = function(req, res){
-  user.register(new user({ username: req.body.username }), req.body.password, function(err, user) {
-    res.render('index', { title: configs.title, subt: 'Created user', user: user });
-  });
+    user.register(new user({ username: req.body.username }), req.body.password, function(err, user) {
+        res.render('index', { title: configs.title, subt: 'Created user', user: user });
+    });
 };
 
 exports.logout = function(req, res){
-  req.logout();
-  res.redirect('/');
-};
-
-exports.loginSuccess = function(req, res){
-  res.render('index', { title: configs.title, subt: 'Login success!', user: req.user });
-};
-
-exports.loginFail = function(req, res){
-  res.render('index', { title: configs.title, subt: 'Login failed...', user: req.user });
+    req.logout();
+    res.redirect('/');
 };
