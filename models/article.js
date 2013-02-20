@@ -14,7 +14,7 @@ var Article = new mongoose.Schema({
 
 // Generate a prettyname for the required field based on the
 // article's title and the date on which it was created
-article.methods.generatePrettyname = function(){
+Article.methods.generatePrettyname = function(){
 
     var base = this.title + ' ' + this.createdOn.getTime()
       , pattern = /[^a-z0-9]+/ig
