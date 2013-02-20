@@ -12,10 +12,8 @@ var User = new mongoose.Schema({
 User.plugin(passportLocalMongoose);
 
 // Static accessor for the user levels enum
-User.statics.levels = {
-    get: function() {
-        return levels;
-    }
-};
+User.statics.__defineGetter__('levels', function() {
+    return levels;
+});
 
 module.exports = exports = mongoose.model('User', User);
