@@ -8,7 +8,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , config = require('./config')
-  , user = require('./models/user')
+  , User = require('./models/user')
   , mongoose = require('mongoose')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
@@ -42,9 +42,9 @@ mongoose.connection.on('error', function(evt) {
 });
 
 // Configure passport to manage user account actions
-passport.use(new LocalStrategy(user.authenticate()));
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Define routes
 app.get('/', routes.index);

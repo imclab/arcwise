@@ -1,4 +1,5 @@
 {
-    "mongo_uri":    "mongodb://localhost/arcwise",
-    "title":        "Hello, Arcwise!"
+    "mongo_uri":        "mongodb://localhost/arcwise",
+    "mongo_test_uri":   "mongodb://localhost/arcwisetestdb",
+    "title":            "Hello, Arcwise!"
 }

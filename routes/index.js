@@ -1,10 +1,10 @@
 var configs = require('../config')
   , dimsum = require('dimsum')
-  , user = require('../models/user');
+  , User = require('../models/user');
 
 exports.index = function(req, res){
 
-    user.find({}, function(err, users) {
+    User.find({}, function(err, users) {
 
         res.render('index', {
             title: 'Arcwise',
@@ -26,8 +26,14 @@ exports.index = function(req, res){
 };
 
 exports.signup = function(req, res){
-    user.register(new user({ username: req.body.username }), req.body.password, function(err, user) {
-        res.render('index', { title: configs.title, subt: 'Created user', user: user });
+
+    var newuser = new User({
+        username: req.body.username,
+        email: req.body.email
+    });
+
+    User.register(newuser, req.body.password, function(err, result) {
+        res.redirect('/');
     });
 };
 

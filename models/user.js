@@ -1,8 +1,21 @@
 var mongoose = require('mongoose')
-  , passportLocalMongoose = require('passport-local-mongoose');
+  , passportLocalMongoose = require('passport-local-mongoose')
+  , levels = ['admin', 'editor', 'contributor'];
 
-var user = new mongoose.Schema({});
+var User = new mongoose.Schema({
+    email:  { type: String, required:  true                      },
+    level:  { type: String, default: 'contributor', enum: levels },
+    avatar: { type: String                                       }
+});
 
-user.plugin(passportLocalMongoose);
+// Add 'username', 'hash' and 'salt' fields to the user schema
+User.plugin(passportLocalMongoose);
 
-module.exports = exports = mongoose.model('user', user);
+// Static accessor for the user levels enum
+User.statics.levels = {
+    get: function() {
+        return levels;
+    }
+};
+
+module.exports = exports = mongoose.model('User', User);
