@@ -23,4 +23,15 @@ Article.methods.generatePrettyname = function(){
     return base.replace(pattern, repl).toLowerCase();
 };
 
+Article.pre('validate', function(next) {
+
+    // Create a prettyname if there isn't one already
+    if (!this.prettyname) this.prettyname = this.generatePrettyname();
+
+    // Update the modifiedOn date
+    this.modifiedOn = Date.now();
+
+    next();
+});
+
 module.exports = exports = mongoose.model('Article', Article);
