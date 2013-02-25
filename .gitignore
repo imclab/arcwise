@@ -16,4 +16,5 @@ npm-debug.log
 .DS_Store
 
 db
+logs
 config/custom.json
