@@ -2,7 +2,6 @@ var DB_DIR = 'db'
   , LOG_DIR = 'logs'
   , NPM_DIR  = 'node_modules'
   , MONGO_LOG = LOG_DIR + '/mongo.log'
-  , APP_LOG = LOG_DIR + '/arcwise.log'
   , APP_MAIN = 'app.js'
   , APP_PID = '.pid'
   , EXEC_OPTS = { printStdout: true, printStderr: true, breakOnError: true }
@@ -10,18 +9,22 @@ var DB_DIR = 'db'
 
 desc('Starts the db and application servers');
 task('start', ['db:start'], function() {
-    jake.exec('forever start ' + APP_MAIN, function() {
+    jake.exec('forever start --append -l arcwise.log ' + APP_MAIN, function() {
         jake.exec('forever list', EXEC_OPTS);
     }, EXEC_OPTS);
 });
 
-desc('Stops the db and application servers')
+desc('Stops the db and application servers');
 task('stop', function() {
     jake.exec('forever stop ' + APP_MAIN, function() {
         jake.Task['db:stop'].invoke();
     }, EXEC_OPTS);
-
 });
+
+desc('Restarts the application server');
+task('restart', function() {
+    jake.exec('forever restart ' + APP_MAIN, complete, EXEC_OPTS);
+}, { async: true });
 
 namespace('setup', function() {
 
