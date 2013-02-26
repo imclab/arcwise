@@ -1,70 +1,13 @@
 extends layout
 
 block content
-    h1= title
-
-    if (user)
-        p Welcome #{user.username}&nbsp;
-            a(href="/logout") log out
-
-        form.hero-unit.form-horizontal(method="post", action="/articles")
-
-            h1 Form-fill tool
-            p Create some random posts to serve as content while we bootstrap this app. Attribute posts to any valid user, and give them some unique content!
-
-            div.control-group
-                label.control-label Author:
-                div.controls
-                    select(name="author")
-                        each author, i in users
-                            if (i == post.author)
-                                option(value='#{author._id}', selected="selected") (#{i}) #{author.username}
-                            else
-                                option(value='#{author._id}') (#{i}) #{author.username}
-
-            div.control-group
-                label.control-label Title:
-                div.controls
-                    input.input-xxlarge(type="text", name="title", value="#{post.title}")
-            
-            div.control-group
-                label.control-label Body:
-                div.controls
-                    textarea.input-block-level(name="body", rows="20") #{post.body}
-            
-            div.control-group.offset2
-                label.checkbox
-                    if (post.published)
-                        input(type="checkbox", name="published", value="true", checked="checked")
-                    else
-                        input(type="checkbox", name="published", value="true")
-                    | Published?
-
-            div.control-group.offset2
-
-                a.btn(href="/")
-                    i.icon-repeat
-                    | &nbsp;Refresh!
-
-                | &nbsp;
-
-                button.btn.btn-primary(type="submit")
-                    i.icon-share.icon-white
-                    | &nbsp;Publish!
-
+    
+    if (err)
+        p= err
 
     else
-        p Sign up!
-        form(method="post", action="/signup")
-            input(type="text", name="username", placeholder="username")
-            input(type="email", name="email", placeholder="email")
-            input(type="password", name="password", placeholder="password")
-            button.btn(type="submit") Sign up
-        hr
-    
-        p Log in!
-        form(method="post", action="/login")
-            input(type="text", name="username", placeholder="username")
-            input(type="password", name="password", placeholder="password")
-            button.btn(type="submit") Log in
+        each article, i in articles
+            article
+                h2 #{i}. #{article.title}
+                p !{article.body}
       

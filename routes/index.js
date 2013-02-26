@@ -1,25 +1,28 @@
 var configs = require('../config')
   , dimsum = require('dimsum')
+  , marked = require('marked')
+  , Article = require('../models/article')
   , User = require('../models/user');
+
+marked.setOptions({
+    sanitize: false
+});
 
 exports.index = function(req, res){
 
-    User.find({}, function(err, users) {
+    var limit = 5
+      , skip = (req.params[0] && req.params[0] - 1 > 0) ? (req.params[0] - 1) * limit : 0;
+
+    Article.find({}, null, { limit: limit, skip: skip }, function(err, articles) {
+
+        articles.every(function(val, i) {
+            val.body = marked(val.body);
+            return true;
+        });
 
         res.render('index', {
-            title: 'Arcwise',
-            user: req.user,
-            users: users,
-            post: {
-                author: Math.random() * users.length << 0,
-                title: dimsum.generate(1, { 
-                    'words_per_sentence': [2, 5],
-                    'commas_per_sentence': [0, 0],
-                    'sentences_per_paragraph': [1, 1]
-                }).replace('.', ''),
-                body: dimsum(5),
-                published: (1 == Math.random() * 2 << 0)
-            }
+            'err': err,
+            'articles': articles
         });
 
     });
