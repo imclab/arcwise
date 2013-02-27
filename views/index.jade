@@ -8,6 +8,18 @@ block content
     else
         each article, i in articles
             article
-                h2 #{i}. #{article.title}
+                h2 #{article.title}
+                small Published by !{article.getContributorLink()} on #{article.getFormattedDate()}
                 p !{article.body}
+
+        div.pagination.pagination-centered
+            ul
+                li
+                    a(href="/page/2") 2
+                li
+                    a(href="/page/3") 3
+                li
+                    a(href="/page/4") 4
+                li
+                    a(href="/page/5") 5
       

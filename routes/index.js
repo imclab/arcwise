@@ -13,19 +13,21 @@ exports.index = function(req, res){
     var limit = 5
       , skip = (req.params[0] && req.params[0] - 1 > 0) ? (req.params[0] - 1) * limit : 0;
 
-    Article.find({}, null, { limit: limit, skip: skip }, function(err, articles) {
+    Article.find({}, null, { limit: limit, skip: skip })
+        .populate('user')
+        .exec(function(err, articles) {
 
-        articles.every(function(val, i) {
-            val.body = marked(val.body);
-            return true;
+            articles.every(function(val, i) {
+                val.body = marked(val.body);
+                return true;
+            });
+
+            res.render('index', {
+                'err': err,
+                'articles': articles
+            });
+
         });
-
-        res.render('index', {
-            'err': err,
-            'articles': articles
-        });
-
-    });
 };
 
 exports.signup = function(req, res){

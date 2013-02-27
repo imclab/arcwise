@@ -7,7 +7,19 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
+
     div.container
-        block content
+
+        div.navbar.navbar-fixed-top
+            div.navbar-inner
+                a.brand.pull-left(href='/') Arcwise
+                form.navbar-search.pull-right
+                    input(type='text', class="search-query", placeholder="Search")
+
+        div.row-fluid
+            div.span3.affix.text-center
+                img.arcwise-logo(src="/images/papapishu_chamois.svg")
+            div.span9.offset3
+                block content
 
     script(src='/javascripts/bootstrap.min.js')

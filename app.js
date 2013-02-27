@@ -49,7 +49,6 @@ passport.deserializeUser(User.deserializeUser());
 // Define routes
 app.get('/', routes.index);
 app.get(/^\/page\/([0-9]*)/, routes.index);
-// app.get('/:username', routes.index);
 app.post('/signup', routes.signup);
 app.post('/login', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/' }));
 app.get('/logout', routes.logout);

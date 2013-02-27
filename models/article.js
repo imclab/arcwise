@@ -1,9 +1,10 @@
 var mongoose = require('mongoose')
+  , moment = require('moment')
   , ObjectId = mongoose.Schema.Types.ObjectId
   , User = require('../models/user');
 
 var Article = new mongoose.Schema({
-    userId:     { type: ObjectId,   required: true, ref: 'User' },
+    user:       { type: ObjectId,   required: true, ref: 'User' },
     title:      { type: String,     required: true              },
     body:       { type: String,     required: true              },
     prettyname: { type: String,     required: true              },
@@ -21,6 +22,18 @@ Article.methods.generatePrettyname = function(){
       , repl = '-';
 
     return base.replace(pattern, repl).toLowerCase();
+};
+
+Article.methods.getFormattedDate = function(fieldname, fmt) {
+
+    var fieldname = fieldname || 'createdOn'
+      , fmt = fmt || 'MMMM DD, YYYY';
+
+    return moment(this[fieldname]).format(fmt);
+};
+
+Article.methods.getContributorLink = function() {
+    return '<a href="/' + this.user.username + '">' + this.user.username + '</a>';
 };
 
 Article.pre('validate', function(next) {
